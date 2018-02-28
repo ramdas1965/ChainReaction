@@ -33,9 +33,7 @@
 			
 		    function User ( color, cellsUsed, userId )
 		    {
-				this.color     = color;
-				this.cellsUsed = cellsUsed;
-				this.fileName  = "./anim/Obj-" + userId + "-";
+			
 		    }
 			
 
@@ -260,26 +258,8 @@
 
 				//Function to move image by one step
                                function moveImageByOneStep ( gameImage )
-                              {
-					var image;
-	
-                                        image = gameImage.image;
-                                        switch ( gameImage.direction )
-					{		
-						case UP:    image.style.top  = -STEP * gameImage.stepsCompleted + "px";
-									break;
-								 
-						case DOWN:  image.style.top  =  STEP * gameImage.stepsCompleted + "px";
-									break;
-								 
-						case LEFT:  image.style.left = -STEP * gameImage.stepsCompleted + "px";
-									break;
-								 
-						case RIGHT: image.style.left =  STEP * gameImage.stepsCompleted + "px";
-									break;		
-					}
-						
-					gameImage.stepsCompleted++;
+                               {
+				
                                }
 
 
