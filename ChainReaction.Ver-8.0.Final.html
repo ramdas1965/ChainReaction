@@ -50,8 +50,8 @@
 				this.row             = row;
 				this.col             = col;
 				this.userId          = USER_NONE;
-                this.validDirections = 0;							
-            }
+                                this.validDirections = 0;							
+                   }
 			
 
 			//GameImage ( wrapper class for img tag )
@@ -83,56 +83,41 @@
 				var  row,col;
 				var  gameCell;
 				var  domBoard;	
-                var  cellMatrix;	
+                                var  cellMatrix;	
 				
 
 				//Method to change color of the gameboard
 				this.changeBoardColor = function ( color ) 
 				{
-					var row, col;
-						
-					domBoard.style.borderColor = color;
-					
-					for ( row = 0; row < ROWS; row++ )
-					{
-						for ( col = 0; col < COLS; col++ )
-							cellMatrix[ row ][ col ].div.style.borderColor = color;
-					}
+					 
 				}
 				
 		
 				//Method to returns cell at fiven row and column in gameboard		
 				this.getCellAt = function ( row, col ) 
 				{
-					return  cellMatrix[ row ][ col ];
+					 
 				}
 				
 
 				//Method to add onclick event handler to gameboard
 				this.enableUserInputHandler = function ( handlerFunction )
 				{
-					gameBoard.addEventListener( "click", handlerFunction ); 
+					 
 				}
 				
 	
 				//Method to remove onclick event handler from gameboard	
 				this.disableUserInputHandler = function ( handlerFunction )
 				{
-					gameBoard.removeEventListener( "click", handlerFunction ); 
+					 
 				}	
 			
 
 				//Function to set valid directions for a cell		
 				function	setValidDirectionsForCell( gameCell, row, col )
 				{
-					if ( row != FIRST_ROW )
-					{ 	gameCell.validDirections |= UP;    gameCell.criticalMass++; }
-					if ( row != LAST_ROW )
-					{  	gameCell.validDirections |= DOWN;  gameCell.criticalMass++; }
-					if ( col != FIRST_COL )
-					{ 	gameCell.validDirections |= LEFT;  gameCell.criticalMass++; }
-					if ( col != LAST_COL)
-					{ 	gameCell.validDirections |= RIGHT; gameCell.criticalMass++; }				
+					 				
 				}
 
 
@@ -193,7 +178,7 @@
 				
 				var gameBoard;			
 				
-                var dirIndex;				
+                                var dirIndex;				
 				
 	
 				//Function to create all users	
@@ -259,11 +244,11 @@
 				}
 				
 
-                //Function to set up animateImages function to execute at regular interval when there are images to be moved
-                function startAnimationIfRequired ()
+                               //Function to set up animateImages function to execute at regular interval when there are images to be moved
+                                function startAnimationIfRequired ()
 				{	
                   
-                }   
+                                }   
 				
 
 				//Function that moves images ( needs to be set up to execute at regular interval while there are images to be moved )
@@ -274,12 +259,12 @@
 	  
 
 				//Function to move image by one step
-                function moveImageByOneStep ( gameImage )
-                {
+                               function moveImageByOneStep ( gameImage )
+                              {
 					var image;
 	
-                    image = gameImage.image;
-                    switch ( gameImage.direction )
+                                        image = gameImage.image;
+                                        switch ( gameImage.direction )
 					{		
 						case UP:    image.style.top  = -STEP * gameImage.stepsCompleted + "px";
 									break;
@@ -295,10 +280,10 @@
 					}
 						
 					gameImage.stepsCompleted++;
-                }
+                               }
 
 
-                //Function to remove images from animatedImages array after they have reached their destination cell
+                                //Function to remove images from animatedImages array after they have reached their destination cell
 				function removeImagesFromAnimatedImagesArray ()
 				{
 					
@@ -306,10 +291,10 @@
 			
 	
 				//Function to stop animateImages function when there are no more images to be moved
-                function stopAnimationIfNotRequired ()
+                                function stopAnimationIfNotRequired ()
 				{	
                 
-                }					
+                                }					
 				
 
 				//Function to check end of game condition
@@ -319,7 +304,7 @@
 				}
 				
                 
-                //Main code of ChainReaction - creates all objects necessary to start the game
+                                //Main code of ChainReaction - creates all objects necessary to start the game
 				//Sets up handler to handle onclick user event
 				
 				
