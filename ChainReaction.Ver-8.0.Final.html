@@ -199,19 +199,14 @@
 				//Function to create all users	
 				function createUsers()
 				{
-					var i;
-					var borderColor = [ "rgb(90, 180, 90)", "rgb(220, 60, 220)"  ];
-					
-					for ( i = 0; i < TOTAL_USERS; i++ )
-						user[ i ] = new User ( borderColor[i], 0, i )	     
+					   
 				}
 			
 	
 				//Function to handle user change
 				function changeUser()
 				{
-					currentUserId = ++currentUserId % TOTAL_USERS;
-					gameBoard.changeBoardColor ( user[ currentUserId ].color );
+					
 				}
 			
 	
@@ -246,173 +241,35 @@
 				//Function to handle the action of adding image to the cell
 				function handleAddImageToCell ( gameCell )
 				{
-					var gameImage, image;
-					var div;
-					var oldUserId;
 					
-					
-					div = gameCell.div;
-					
-					if ( gameCell.mass == 0 )
-					{
-						gameImage = new GameImage ();
-						image = gameImage.image;
-						div.appendChild ( image );
-					}
-					else
-						image = div.firstElementChild;		
-						
-					gameCell.mass++;	
-					oldUserId = gameCell.userId;
-					gameCell.userId = currentUserId;	
-                    					
-							
-					if ( gameCell.mass < gameCell.criticalMass )
-					{
-						image.src = user[currentUserId].fileName +  gameCell.mass + ".gif";	
-						
-						if ( gameCell.mass == 1 )
-						{
-							user[ currentUserId ].cellsUsed++;
-							totalCellsUsed++;
-						}
-						else if (imagesAnimated)
-						{
-							if ( gameCell.userId != oldUserId )
-							{
-								user[ oldUserId ].cellsUsed--;
-								user[ currentUserId ].cellsUsed++;
-							}
-							
-							document.getElementById("boomSound").play();
-						}
-					}
-					else
-					{
-					    
-						div.removeChild ( image );
-						gameCell.mass   = 0;
-						gameCell.userId = USER_NONE;
-						dirIndex = 0;
-						
-						if ( gameCell.userId != oldUserId )
-							user[ oldUserId ].cellsUsed--;
-						else
-							user[ currentUserId ].cellsUsed--;
-					
-						totalCellsUsed--;
-						
-						document.getElementById("boomSound").play();
-						
-						for ( i = 0; i < gameCell.criticalMass; i++ )
-				        {
-							gameImage = new GameImage ();
-							image = gameImage.image;
-							div.appendChild ( image );
-							
-							image.src = user[ currentUserId ].fileName + "1.gif";	
-							gameImage.animated = true;
-							
-							setImageDirection ( gameCell, gameImage );
-							
-							setTargetCellOfImage ( gameCell, gameImage );
-							
-							animatedImages.push ( gameImage );
-						}
-						
-						//document.getElementById("boomSound").play();	
-
-                        startAnimationIfRequired ()						
-					}
 				}
 			
 	
 				//Function to assign direction to image
 				function setImageDirection( gameCell, gameImage )
 				{
-					while ( dirIndex < validDirections.length )
-					{
-						if ( gameCell.validDirections & validDirections[ dirIndex ] )
-						{ 
-							gameImage.direction = validDirections[ dirIndex ];
-							dirIndex++;
-							break; 
-						}
-							
-						dirIndex++;
-					}										
+												
 				}
 				
 
 				//Function to set target cell of the image that has split and started moving			
 				function setTargetCellOfImage ( gameCell, gameImage )
 				{ 
-					gameImage.targetRow   = gameCell.row ;
-					gameImage.targetCol   = gameCell.col ;
 					
-					switch( gameImage.direction )
-					{
-						case UP:    gameImage.targetRow-- ;
-									break;
-								 
-						case DOWN:  gameImage.targetRow++;
-									break;
-								 
-						case LEFT:  gameImage.targetCol--;
-									break;
-								 
-						case RIGHT: gameImage.targetCol++;
-									break;	
-					}
 				}
 				
 
                 //Function to set up animateImages function to execute at regular interval when there are images to be moved
                 function startAnimationIfRequired ()
 				{	
-                    if( animatedImages.length > 0 && !imagesAnimated )
-					{
-						imagesAnimated = true;
-						animateHandle = setInterval ( animateImages, TIME_INTERVAL);
-					}
+                  
                 }   
 				
 
 				//Function that moves images ( needs to be set up to execute at regular interval while there are images to be moved )
 				function animateImages ()
 				{
-					var i;
-					var targetCell;
-					var targetCellRow, targetCellCol;
-					var image;
-					
-					
-					i = 0;
-	
-					while( i < animatedImages.length )
-					{
-                        moveImageByOneStep ( animatedImages[ i ] );
-						
-						if( animatedImages[ i ].stepsCompleted == TOTAL_STEPS )
-						{
-							animatedImages[ i ].animated = false;
-							targetCellRow = animatedImages[ i ].targetRow
-							targetCellCol = animatedImages[ i ].targetCol;
-							
-							targetCell = gameBoard.getCellAt ( targetCellRow, targetCellCol );
-
-							image = animatedImages[ i ].image;	
-							image.parentNode.removeChild ( image );
-							
-							handleAddImageToCell ( targetCell );							
-						}
-						
-						i++;					
-					}
-					
-					removeImagesFromAnimatedImagesArray ();	
-
-                    stopAnimationIfNotRequired ()					
+									
 				}
 	  
 
@@ -444,50 +301,21 @@
                 //Function to remove images from animatedImages array after they have reached their destination cell
 				function removeImagesFromAnimatedImagesArray ()
 				{
-					var i = 0;
 					
-					while( i < animatedImages.length )
-					{
-						if ( animatedImages[i].animated == false )
-							animatedImages.shift();
-				        else 
-							i++;
-					}
 				}
 			
 	
 				//Function to stop animateImages function when there are no more images to be moved
                 function stopAnimationIfNotRequired ()
 				{	
-                    if ( animatedImages.length == 0 && imagesAnimated )
-					{
-						clearInterval ( animateHandle );
-						
-						imagesAnimated = false;
-						
-						if ( gameHasEnded () )
-						{
-							document.getElementById( "gameOverMessage" ).style.display = "block";
-							document.getElementById("endSound").play();
-							return;
-						}
-							
-						changeUser();
-
-						gameBoard.enableUserInputHandler ( handleUserAction ); 	
-					}
+                
                 }					
 				
 
 				//Function to check end of game condition
 				function gameHasEnded ()
 				{
-					for( i = 0; i < TOTAL_USERS; i++ )
-					{
-						if ( user[i].cellsUsed == totalCellsUsed )
-					    return true;
-					}
-					return false;
+					
 				}
 				
                 
